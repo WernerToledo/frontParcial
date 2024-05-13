@@ -1,0 +1,64 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div *ngIf="id">
+                <h4>Actualizando datos</h4>
+            </div>
+            <form action="" class="mt-4" (ngSubmit)="AgregarCategoria()">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre de la categoría" [(ngModel)]="nombre">
+                    <label for="nombre">Ingrese el nombre de la categoría</label>
+                </div>
+                
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="edicion" name="edicion" placeholder="Edición de la categoría" [(ngModel)]="edicion">
+                    <label for="edicion">Ingrese la edición de la categoría</label>
+                </div>
+                
+                <div class="row">
+                    <div class="col">
+                        <button type="submit" class="btn btn-success">Guardar</button>
+                    </div>
+                    <div class="col" *ngIf="id">
+                        <button type="submit" class="btn btn-warning" (click)="limpiarData()">Limpiar campos</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col">
+            <table class="table mt-4">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Edición</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="categorias != null; else noData">
+
+                    <tr *ngFor="let categoria of categorias">
+                        <td>{{ categoria.idCategoria }}</td>
+                        <td>{{ categoria.nombre }}</td>
+                        <td>{{ categoria.estado === 'a' ? 'Activo' : 'Desactivo' }}</td>
+                        <td>{{ categoria.edicion }}</td>
+                        <td>
+                            <button class="btn btn-warning" (click)="cargarData(categoria.idCategoria, categoria.nombre, categoria.edicion)"><i class="fa-regular fa-pen-to-square"></i></button>
+                            <button class="btn btn-danger" *ngIf="categoria.estado === 'a'" (click)="desactivarEstado(categoria.idCategoria)"><i
+                                class="fa-solid fa-trash-can"></i></button>
+                            <button class="btn btn-dark" *ngIf="categoria.estado === 'd'" (click)="activarEstado(categoria.idCategoria)"><i
+                                    class="fa-solid fa-rotate-left"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+                <ng-template #noData>
+                    <tr>
+                        <td colspan="4">No hay datos disponibles.</td>
+                    </tr>
+                </ng-template>
+            </table>
+
+        </div>
+    </div>
+</div>

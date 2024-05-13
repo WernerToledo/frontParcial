@@ -1,0 +1,67 @@
+<div class="container mt-3">
+
+    <form method="POST" id="formLogin" (ngSubmit)="cargarTable()">
+        <div class="row">
+            <div class="col-10">
+                <div class="form-floating">
+                    <select *ngIf="prestamos && prestamos.length > 0" class="form-select" id="fecha"
+                        aria-label="Floating label select example" [(ngModel)]="idPrestamo" name="idPrestamo">
+                        <option *ngFor="let prestamo of prestamos" [value]="prestamo.idPrestamo">{{ prestamo.fechaSistema }}
+                        </option>
+                    </select>
+                    <label *ngIf="prestamos && prestamos.length > 0" for="fecha">Fechas de los prestamos</label>
+                </div>
+            </div>
+            <div class="col">
+                <button *ngIf="prestamos && prestamos.length > 0" class="btn btn-dark" type="submit">Buscar prestamo</button>
+            </div>
+        </div>
+        
+        
+    </form>
+    <table class="table mt-3">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Libro</th>
+                <th scope="col">Foto</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Action</th>
+
+            </tr>
+        </thead>
+
+        <tbody *ngIf="filtroDetPrestamo && filtroDetPrestamo.length > 0">
+            <tr *ngFor="let detprestamo of filtroDetPrestamo">
+                <th scope="row">{{detprestamo.idDetPrestamo}}</th>
+                <td>{{detprestamo.prestamo?.usuario?.nombres}}</td>
+                <td>{{detprestamo.prestamo?.fechaSistema}}</td>
+                <td>{{detprestamo.libro?.nombre}}</td>
+                <td><img src="{{detprestamo.libro?.foto}}" alt="foto de los libros" width="50px"></td>
+                <td>{{detprestamo.cantidad}}</td>
+                <td>{{detprestamo.estado}}</td>
+                <td>
+                    <button class="btn btn-dark" *ngIf="detprestamo.estado === 'a'"
+                        (click)="devolverByOne(detprestamo.idDetPrestamo)">
+                        <i class="fa-solid fa-rotate-right"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p class="text-center">
+        <button (click)="delvolverTodo()" *ngIf="idPrestamo && filtroDetPrestamo && filtroDetPrestamo.length > 0"
+            class="btn btn-outline-danger">
+            Devolver todo
+        </button>
+    </p>
+
+    <p class="text-center fs-3" *ngIf="filtroDetPrestamo && filtroDetPrestamo.length == 0">
+        Sin data
+    </p>
+
+</div>

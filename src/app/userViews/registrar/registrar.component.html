@@ -1,0 +1,36 @@
+<div class="container">
+    <div >
+        <h4 class="text-center">Resgistro de usuario</h4>
+    </div>
+    <form action="" (ngSubmit)="saveUser()" class="mt-5">
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="nombres" name="nombres" placeholder="Nombres del usuario"
+                [(ngModel)]="nombres">
+            <label for="nombres">Ingrese los nombres del usuario</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="apellidos" name="apellidos" placeholder="Apellidos del usuario"
+                [(ngModel)]="apellidos">
+            <label for="apellidos">Ingrese los apellidos del usuario</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="username" name="username" placeholder="Nombre de usuario"
+                [(ngModel)]="username">
+            <label for="username">Ingrese el nombre de usuario</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="passwordUsuario" name="passwordUsuario"
+                placeholder="Contraseña del usuario" [(ngModel)]="passwordUser">
+            <label for="passwordUsuario">Ingrese la contraseña del usuario</label>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <button type="submit" class="btn btn-success">Guardar</button>
+            </div>
+        </div>
+    </form>
+</div>

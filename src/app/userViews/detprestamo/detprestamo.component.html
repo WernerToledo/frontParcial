@@ -1,0 +1,76 @@
+<div class="container mt-4">
+    <div class="row">
+        <h4 class="text-center mb-3">Detalle de prestamos</h4>
+        <div *ngIf="id && id > 0" class="form-floating mb-3">
+            <div class="row">
+                <div class="col-9">
+                    <div class="form-floating mb-3">
+                        <input type="number" class="form-control" id="cantidad" name="cantidad"
+                            placeholder="Ingrese la cantidad" [(ngModel)]="cantidad" required>
+                        <label for="cantidad">Ingrese la cantidad a prestar</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-primary" (click)="actualizarPrestamo()">Guardar
+                        Cambios</button>
+                </div>
+                <h4 class="text-center">{{ message }}</h4>
+            </div>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Foto</th>
+                    <th>Cantidad</th>
+                    <th>cantidadStock</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let prestamo of dataSesion">
+                    <td>{{ prestamo.id }}</td>
+                    <td>{{ prestamo.nombre }}</td>
+                    <td><img [src]="prestamo.foto" alt="Foto" height="50" width="50"></td>
+                    <td>{{ prestamo.cantidad }}</td>
+                    <td>{{prestamo.cantidadStock }}</td>
+                    <td>
+                        <button class="btn btn-warning" (click)="cargarId(prestamo.id)">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </button>
+
+                        <button class="btn btn-danger" (click)="EliminarElemento(prestamo.id)">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+
+                <!-- Esta fila se mostrará solo si hay un mensaje -->
+                <tr *ngIf="message">
+                    <td colspan="6" class="text-center">{{ message }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="row">
+            <div class="col">
+                <div class="d-grid gap-2" *ngIf="message == undefined">
+                    <button class="btn btn-outline-success" type="button" (click)="GuardarPrestamo()">Registrar
+                        prestamo</button>
+                </div>
+            </div>
+            <div class="col">
+                <div class="d-grid gap-2" *ngIf="message == undefined">
+                    <button class="btn btn-outline-danger" type="button" (click)="limpiarSesion()">Cancelar
+                        prestamo</button>
+                </div>
+            </div>
+        </div>
+
+
+        <div *ngIf="jsonData?.status != '000'">
+            <p class="text-center">{{ jsonData?.message }}</p>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,88 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div *ngIf="id">
+                <h4>Actualizando datos</h4>
+            </div>
+            <form action="" (ngSubmit)="saveUser()" class="mt-5">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="nombres" name="nombres" placeholder="Nombres del usuario" [(ngModel)]="nombres">
+                    <label for="nombres">Ingrese los nombres del usuario</label>
+                </div>
+                
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="apellidos" name="apellidos" placeholder="Apellidos del usuario" [(ngModel)]="apellidos">
+                    <label for="apellidos">Ingrese los apellidos del usuario</label>
+                </div>
+                
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Nombre de usuario" [(ngModel)]="username">
+                    <label for="username">Ingrese el nombre de usuario</label>
+                </div>
+                
+                <div class="form-floating mb-3">
+                    <select class="form-select" id="tipoUsuario" name="tipoUsuario" aria-label="Tipo de usuario" [(ngModel)]="rol">
+                        <option value="1">Administrador</option>
+                        <option value="2">Usuario</option>
+                        <!-- Agrega más opciones según los tipos de usuario que necesites -->
+                    </select>
+                    <label for="tipoUsuario">Seleccione el tipo de usuario</label>
+                </div>
+                
+                <div class="form-floating mb-3">
+                    <input type="password" class="form-control" id="passwordUsuario" name="passwordUsuario" placeholder="Contraseña del usuario" [(ngModel)]="passwordUser">
+                    <label for="passwordUsuario">Ingrese la contraseña del usuario</label>
+                </div>
+                
+                <div class="row">
+                    <div class="col">
+                        <button type="submit" class="btn btn-success">Guardar</button>
+                    </div>
+                    <div class="col" *ngIf="id">
+                        <button type="submit" class="btn btn-warning" (click)="limpiarData()">Limpiar campos</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col">
+            <div *ngIf="jsonResponse?.status == '001'" class="text-center">
+                <h4 class="text-center">{{jsonResponse?.message}}</h4>
+            </div>
+
+            <table class="table mt-4" *ngIf="jsonResponse?.status == '000'">
+                <thead>
+                    <tr>
+                        <th scope="col">id</th>
+                        <th scope="col">Nombres</th>
+                        <th scope="col">Apellidos</th>
+                        <th scope="col">UserName</th>
+                        <th scope="col">Tipo de usuario</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Password</th>
+                        <th scope="col">actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let usuario of usuarios">
+                        <td>{{ usuario.idUsuario }}</td>
+                        <td>{{ usuario.nombres }}</td>
+                        <td>{{ usuario.apellidos }}</td>
+                        <td>{{ usuario.username }}</td>
+                        <td>{{ usuario.rol?.nombre }}</td>
+                        <td>{{ usuario.estado === 'a' ? 'Activo' : 'Desactivo' }}</td>
+                        <td>{{ usuario.passwordUser }}</td>
+
+                        <td>
+                            <button class="btn btn-warning" type="button" (click)="cargarData(usuario.idUsuario, usuario.nombres, usuario.apellidos, usuario.username, usuario.passwordUser, usuario.rol?.idRol)"><i class="fa-regular fa-pen-to-square"></i></button>
+                            <button class="btn btn-danger" *ngIf="usuario.estado === 'a'" (click)="desactivate(usuario.idUsuario)"><i
+                                    class="fa-solid fa-trash-can"></i></button>
+                            <button class="btn btn-dark" *ngIf="usuario.estado === 'd'" (click)="activate(usuario.idUsuario)"><i
+                                    class="fa-solid fa-rotate-left"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>

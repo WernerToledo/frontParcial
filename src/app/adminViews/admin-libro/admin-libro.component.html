@@ -1,0 +1,116 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div *ngIf="id">
+                <h4>Actualizando datos</h4>
+            </div>
+            <form action="" class="mt-4" (submit)="guardarLibro()">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre del libro" [(ngModel)]="nombre">
+                    <label for="nombre">Ingrese el nombre de libro</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="autor" name="autor" placeholder="Autor del libro" [(ngModel)]="autor">
+                    <label for="autor">Ingrese el autor del libro</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input type="number" class="form-control" id="cantidad" name="cantidad" placeholder="Cantidad" [(ngModel)]="cantidad">
+                    <label for="cantidad">Ingrese la cantidad de libros</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="foto" name="foto" placeholder="URL de la foto" [(ngModel)]="foto">
+                    <label for="foto">Ingrese la URL de la foto del libro</label>
+                </div>
+
+                
+                <div class="form-floating mb-3">
+                    <select class="form-select" id="categoria" name="categoria" aria-label="Categoría" [(ngModel)]="idCategoria">
+                        <option *ngFor="let categoria of categorias" value="{{ categoria.idCategoria }}">{{ categoria.nombre }}</option>
+                    </select>
+                    <label for="categoria">Seleccione la categoría del libro</label>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <button type="submit" class="btn btn-success">Guardar</button>
+                    </div>
+                    <div class="col" *ngIf="id">
+                        <button type="submit" class="btn btn-warning" (click)="limpiarData()">Limpiar campos</button>
+                    </div>
+                </div>
+                
+            </form>
+        </div>
+        <div class="col">
+            <table class="table mt-4">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Autor</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Foto</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Categoría</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="jsonResponse?.status == '000'; else noData">
+                    <tr *ngFor="let libro of Libros">
+                        <td>{{ libro.idLibro }}</td>
+                        <td>{{ libro.nombre }}</td>
+                        <td>{{ libro.autor }}</td>
+                        <td>{{ libro.cantidad }}</td>
+                        <td><img [src]="libro.foto" alt="{{ libro.nombre }}" width="40"></td>
+                        <td>{{ libro.estado === 'a' ? 'Activo' : 'Desactivo' }}</td>
+                        <td>{{ libro.categoria?.nombre }}</td>
+                        <td>
+                            <button class="btn btn-warning"><i class="fa-regular fa-pen-to-square" (click)="cargarData(libro.idLibro, libro.nombre, libro.autor, libro.cantidad, libro.foto, libro.categoria?.idCategoria)"></i></button>
+                            
+                            <button class="btn btn-danger" *ngIf="libro.estado === 'a'" (click)="EliminarLibro(libro.idLibro)"><i
+                                    class="fa-solid fa-trash-can"></i></button>
+
+                            <button class="btn btn-dark" *ngIf="libro.estado === 'd'" (click)="ActivarLibro(libro.idLibro)"><i
+                                    class="fa-solid fa-rotate-left"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+                <ng-template #noData>
+                    <tr>
+                        <td colspan="8" class="text-center">No hay datos disponibles.</td>
+                    </tr>
+                </ng-template>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+<!-- modal -->
+<div class="modal fade" id="miModal" tabindex="-1" role="dialog" aria-labelledby="miModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="miModalLabel">Formulario</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Aquí va el contenido del formulario -->
+                <form id="miFormulario">
+                    <div class="form-group">
+                        <label for="campo1">Campo 1</label>
+                        <input type="text" class="form-control" id="campo1" name="campo1">
+                    </div>
+                    <!-- Agrega más campos según necesites -->
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- modal -->

@@ -1,0 +1,74 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+         <img src="/assets/imgs/LogoOnlyNoBackground.png" alt="" width="50" height="50">
+        
+         <a class="navbar-brand" href="">Biblioteca
+           
+        </a>
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                
+                <li class="nav-item" *ngIf="usuario == null || idRol == 2">
+                    <button class="nav-link" (click)="LibrosUserView()">Libros</button>
+                </li>
+
+                <li class="nav-item" *ngIf="idRol == 2">
+                    <button class="nav-link" (click)="PrestamoUserView()">Prestamos</button>
+                </li>
+                <li class="nav-item" *ngIf="idRol == null">
+                    <button class="nav-link" (click)="LoginView()">Prestamos</button>
+                </li>
+
+                <!-- Para el admin -->
+                <li class="nav-item" *ngIf="idRol == 1">
+                    <button class="nav-link active" aria-current="page" (click)="IndexAdminView()" >Home</button>
+                </li>
+                <li class="nav-item" *ngIf="idRol == 1">
+                    <button class="nav-link" (click)="UsuariosAdminView()">Usuarios</button>
+                </li>
+                <li class="nav-item" *ngIf="idRol == 1">
+                    <button class="nav-link" (click)="Categorias()">Categoria</button>
+                </li>
+                <li class="nav-item" *ngIf="idRol == 1">
+                    <button class="nav-link" (click)="LibrosAdminView()">Libros</button>
+                </li>
+               
+                
+                
+            </ul>             
+        </div>
+        <button class="btn btn-primary position-relative me-5" (click)="detPrestamo()">
+
+            <i class="fa-solid fa-book" style="font-size: 20px"></i>
+           
+            <span *ngIf="cantidadDatosEnPrestamo != undefined" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                {{ cantidadDatosEnPrestamo }}
+              <span class="visually-hidden">unread messages</span>
+            </span>
+        </button>
+        
+        
+        
+        <!-- Si el usuario está autenticado -->
+        <div *ngIf="usuario?.username !== null">
+            <button class="btn btn-danger" (click)="CerrarSesion()">
+              {{ usuario?.username }}
+              <i class="fa-solid fa-right-from-bracket" style="font-size: 20px;"></i>
+            </button>
+          </div>
+        
+        <!-- Si el usuario no está autenticado -->
+        <div *ngIf="usuario?.username === null">
+            <button class="btn btn-warning" (click)="LoginView()">
+            <i class="fa-solid fa-user" style="font-size: 20px;"></i>
+            </button>
+        </div>
+        
+    </div>
+</nav>

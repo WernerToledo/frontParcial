@@ -1,0 +1,25 @@
+<div class="container">
+    <div class="container mt-5 bg-dark rounded-5" style="height: 500px; width: 500px;">
+        <h2 class="text-center pt-5 text-white">Login</h2>
+        
+        <form method="POST" id="formLogin" (submit)="Login()">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="username" name="username"
+                       placeholder="username" [(ngModel)]="username" required>
+                <label for="username">Ingrese su nombre de usuario</label>
+            </div>
+            <div class="form-floating">
+                <input type="password" class="form-control" id="pass" name="pass" placeholder="Password" [(ngModel)]="password" required>
+                <label for="pass">Password</label>
+            </div>
+            <p class="text-center"><button type="submit" class="btn btn-success mt-5">Login</button></p>
+        </form>
+
+        <div *ngIf="message" class="text-white m-3">
+            <h6>{{ message }}</h6>
+        </div>
+       
+        <p class="text-center mt-5"><button type="button" class="btn btn-warning" (click)="registrarse()">Registrarse</button></p>
+    </div>
+    
+</div>
